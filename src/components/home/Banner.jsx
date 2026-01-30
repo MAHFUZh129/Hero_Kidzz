@@ -4,7 +4,7 @@ import React from 'react';
 
 const Banner = () => {
     return (
-        <div className='flex items-center px-13 justify-between' >
+        <div className='flex items-center justify-between' >
             <div className='flex-1 space-y-3'>
              <p
               className={'text-3xl font-bold leading-12'}>“ <span className='text-primary'>HeroKids শিশুদের জন্য একটি আধুনিক লার্নিং প্ল্যাটফর্ম</span>, যেখানে মজার ও ইন্টার‌্যাক্টিভ কনটেন্টের মাধ্যমে শেখাকে করা হয় সহজ, নিরাপদ এবং আনন্দদায়ক।”</p>
