@@ -28,6 +28,18 @@ export const handleCart = async ({ product, inc = true }) => {
 
   } 
   else {
+    //Not Exist:insert Cart
+    const newData = {
+      productId: product?._id,
+      email: user?.email,
+      title: product.title,
+      quantity: 1,
+      image: product.image,
+      price: product.price - (product.price * product.discount) / 100,
+      username: user?.name,
+    };
+    const result = await cartCollection.insertOne(newData);
+    return { success: result.acknowledged };
     
   }
 };
