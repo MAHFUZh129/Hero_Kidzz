@@ -40,6 +40,18 @@ export const handleCart = async ({ product, inc = true }) => {
     };
     const result = await cartCollection.insertOne(newData);
     return { success: result.acknowledged };
-    
+
   }
+};
+
+export const getCart = async () => {
+  const { user } = (await getServerSession(authOptions)) || {};
+  if (!user) return [];
+  console.log("get cart called");
+
+  const query = { email: user?.email };
+
+  const result = await cartCollection.find(query).toArray();
+
+  return result;
 };
