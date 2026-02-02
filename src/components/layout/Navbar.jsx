@@ -3,6 +3,7 @@ import Link from 'next/link';
 import { PiShoppingCartSimple } from "react-icons/pi";
 import Logo from './Logo';
 import NavLink from '../buttons/NavLink';
+import AuthButton from '../buttons/AuthButton';
 
 const Navbar = () => {
     const nav = <>
@@ -47,9 +48,10 @@ const Navbar = () => {
                     <button className='btn btn-primary'><PiShoppingCartSimple/></button>
                     
                     </Link>
-                    <Link href={'/login'}>
+                    <AuthButton></AuthButton>
+                    {/* <Link href={'/login'}>
                     <button className='btn btn-primary btn-outline'>Login</button>
-                    </Link>
+                    </Link> */}
                 </div>
             </div>
         </div>
