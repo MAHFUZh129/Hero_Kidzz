@@ -30,7 +30,7 @@ const CartItemCard = ({ item, onIncrease, onDecrease, onRemove }) => {
 
                     Swal.fire({
                         title: "Deleted!",
-                        text: "প্রোডাক্ট কার্ট থেকে বাদ দেয়া হয়েছে.",
+                        text: "removed the product from cartlist",
                         icon: "success",
                     });
                 } else {
