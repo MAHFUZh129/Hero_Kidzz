@@ -72,7 +72,7 @@ export default function ProductCard({ product }) {
         </div>
 
         {/* Add to Cart Button */}
-        <CartButton product={product}></CartButton>
+        <CartButton product={{...product,_id:_id.toString()}}></CartButton>
        
        <Link href={`/products/${_id}`}>
         <button className="w-full mt-2 flex items-center justify-center gap-2 btn btn-otline text-primary py-2.5 rounded-xl font-medium hover:bg-primary/90 hover:text-white transition">
