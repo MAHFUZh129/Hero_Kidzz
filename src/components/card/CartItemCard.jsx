@@ -5,7 +5,7 @@ import { useState } from "react";
 import { FaPlus, FaMinus, FaTrash } from "react-icons/fa";
 import Swal from "sweetalert2";
 
-const CartItemCard = ({ item, onIncrease, onDecrease, onRemove }) => {
+const CartItemCard = ({ item, onIncrease, onDecrease, removeItem }) => {
     //   const { title, image, price, quantity } = item;
     const { title, image, quantity, price, _id } = item;
     const [loading, setLoading] = useState(false);
@@ -26,7 +26,7 @@ const CartItemCard = ({ item, onIncrease, onDecrease, onRemove }) => {
                 const result = await deleteItemsFromCart(_id);
 
                 if (result.success) {
-                    //   removeItem(_id);
+                      removeItem(_id);
 
                     Swal.fire({
                         title: "Deleted!",

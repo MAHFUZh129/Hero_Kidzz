@@ -1,5 +1,7 @@
 import { getCart } from '@/action/server/cart';
 import CartItemCard from '@/components/card/CartItemCard';
+import Cart from '@/components/home/Cart';
+import Link from 'next/link';
 import React from 'react';
 
 const CartItems = async() => {
@@ -15,27 +17,27 @@ const CartItems = async() => {
     return (
         <div className="max-w-4xl mx-auto px-4 py-8">
       <h1 className="text-2xl font-bold mb-6">Your Cart</h1>
-
-      <div className="space-y-4">
-        {formattedItems.map((item) => (
-          <CartItemCard key={item._id}
-           item={item}
-            />
-        
-        ))}
+      <div>
+         {cartItems.length == 0 ? (
+        <>
+          <div className="text-center py-20 space-y-5">
+            <h2 className={'text-4xl font-bold'}>
+              আপনি কার্টে কোন প্রোডাক্ট এড করেন নি
+            </h2>
+            <Link
+              href={"/products"}
+              className="btn btn-primary btn-lg btn-wide"
+            >
+              {/* <TbHorseToy></TbHorseToy> পন্য দেখুন */}
+            </Link>
+          </div>
+        </>
+      ) : (
+        <Cart cartItem={formattedItems}></Cart>
+      )}
       </div>
 
-      {/*  Cart Summary */}
-      <div className="mt-8 p-4 border rounded-xl bg-gray-50">
-        <div className="flex justify-between text-lg font-semibold">
-          <span>Total</span>
-          {/* <span>৳ {total}</span> */}
-        </div>
-
-        <button className="btn btn-primary w-full mt-4">
-          Proceed to Checkout
-        </button>
-      </div>
+     
     </div>
     );
 };
