@@ -15,29 +15,38 @@ const CartItems = async() => {
 
 
     return (
-        <div className="max-w-4xl mx-auto px-4 py-8">
-      <h1 className="text-2xl font-bold mb-6">Your Cart</h1>
-      <div>
-         {cartItems.length == 0 ? (
-        <>
-          <div className="text-center py-20 space-y-5">
-            <h2 className={'text-4xl font-bold'}>
-              আপনি কার্টে কোন প্রোডাক্ট এড করেন নি
-            </h2>
-            <Link
-              href={"/products"}
-              className="btn btn-primary btn-lg btn-wide"
-            >
-              {/* <TbHorseToy></TbHorseToy> পন্য দেখুন */}
-            </Link>
-          </div>
-        </>
-      ) : (
-        <Cart cartItem={formattedItems}></Cart>
-      )}
-      </div>
+       <div className="max-w-6xl mx-auto px-4 py-10">
+      
+      {/* PAGE TITLE */}
+      <h1 className="text-3xl font-bold mb-8 flex items-center gap-3">
+        <FaShoppingCart className="text-primary" />
+        Your Shopping Cart
+      </h1>
 
-     
+      {/* EMPTY CART */}
+      {cartItems.length === 0 ? (
+        <div className="flex flex-col items-center justify-center py-24 bg-white rounded-2xl shadow-sm border">
+          <FaBoxOpen className="text-7xl text-gray-300 mb-6" />
+
+          <h2 className="text-2xl font-bold text-gray-700 mb-2">
+            Your cart is empty
+          </h2>
+
+          <p className="text-gray-500 mb-6 text-center">
+            Looks like you haven’t added anything to your cart yet.
+          </p>
+
+          <Link
+            href="/products"
+            className="btn btn-primary btn-wide rounded-xl text-lg"
+          >
+            Browse Products
+          </Link>
+        </div>
+      ) : (
+        /* CART CONTENT */
+        <Cart cartItem={formattedItems} />
+      )}
     </div>
     );
 };
