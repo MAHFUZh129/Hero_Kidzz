@@ -69,53 +69,66 @@ const CartItemCard = ({ item, updateQuantity, removeItem }) => {
       }
 
     return (
-        <div className="flex gap-4 p-4 border rounded-xl shadow-sm bg-white">
+        <div className="group flex gap-4 p-5 rounded-2xl border bg-white shadow-sm hover:shadow-lg transition">
+      
+      {/* IMAGE */}
+      <div className="w-28 h-28 relative rounded-xl overflow-hidden border">
+        <Image
+          src={image}
+          alt={title}
+          fill
+          className="object-cover group-hover:scale-105 transition"
+        />
+      </div>
 
-            {/* Product Image */}
-            <div className="w-24 h-24 relative">
-                <Image
-                    src={image}
-                    alt={title}
-                    fill
-                    className="object-cover rounded-lg"
-                />
-            </div>
-
-            {/* Product Info */}
-            <div className="flex-1">
-                <h3 className="font-semibold text-gray-800">{title}</h3>
-                <p className="text-primary font-bold mt-1">৳ {price}</p>
-
-                {/* Quantity Controller */}
-                <div className="flex items-center gap-3 mt-3">
-                    <button
-                        onClick={onDecrease}
-                        disabled={quantity===1 || loading}
-                        className="btn btn-sm btn-outline"
-                    >
-                        <FaMinus />
-                    </button>
-
-                    <span className="font-medium">{quantity}</span>
-
-                    <button
-                        onClick={onIncrease}
-                        disabled={quantity===10 || loading}
-                        className="btn btn-sm btn-outline"
-                    >
-                        <FaPlus />
-                    </button>
-                </div>
-            </div>
-
-            {/* Remove Button */}
-            <button
-                onClick={handleDeleteCart}
-                className="text-red-500 hover:text-red-600"
-            >
-                <FaTrash />
-            </button>
+      {/* INFO */}
+      <div className="flex-1 flex flex-col justify-between">
+        <div>
+          <h3 className="font-semibold text-gray-800 line-clamp-2">
+            {title}
+          </h3>
+          <p className="text-primary font-bold mt-1">৳ {price}</p>
         </div>
+
+        {/* QUANTITY */}
+        <div className="flex items-center gap-3 mt-3">
+          <button
+            onClick={onDecrease}
+            disabled={quantity === 1 || loading}
+            className="w-9 h-9 flex items-center justify-center rounded-full border hover:bg-gray-100 disabled:opacity-50"
+          >
+            <FaMinus size={12} />
+          </button>
+
+          <span className="font-medium text-lg w-6 text-center">
+            {quantity}
+          </span>
+
+          <button
+            onClick={onIncrease}
+            disabled={quantity === 10 || loading}
+            className="w-9 h-9 flex items-center justify-center rounded-full border hover:bg-gray-100 disabled:opacity-50"
+          >
+            <FaPlus size={12} />
+          </button>
+        </div>
+      </div>
+
+      {/* PRICE + DELETE */}
+      <div className="flex flex-col items-end justify-between">
+        <p className="font-semibold text-gray-700">
+          ৳ {price * quantity}
+        </p>
+
+        <button
+          onClick={handleDeleteCart}
+          disabled={loading}
+          className="text-red-500 hover:text-red-600 transition"
+        >
+          <FaTrash />
+        </button>
+      </div>
+    </div>
     );
 };
 
