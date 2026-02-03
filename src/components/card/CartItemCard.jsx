@@ -1,5 +1,5 @@
 "use client"
-import { deleteItemsFromCart, increaseItemDb } from "@/action/server/cart";
+import { decreaseItemDb, deleteItemsFromCart, increaseItemDb } from "@/action/server/cart";
 import Image from "next/image";
 import { useState } from "react";
 import { FaPlus, FaMinus, FaTrash } from "react-icons/fa";
@@ -57,6 +57,17 @@ const CartItemCard = ({ item, updateQuantity, removeItem }) => {
       };
 
 
+      const onDecrease= async()=>{
+        setLoading(true);
+        const result = await decreaseItemDb(_id,quantity)
+        if(result.success){
+            Swal.fire("success", "removed this product from cart", "success")
+            updateQuantity(_id,quantity - 1)
+
+        }
+        setLoading(false);
+      }
+
     return (
         <div className="flex gap-4 p-4 border rounded-xl shadow-sm bg-white">
 
@@ -79,6 +90,7 @@ const CartItemCard = ({ item, updateQuantity, removeItem }) => {
                 <div className="flex items-center gap-3 mt-3">
                     <button
                         onClick={onDecrease}
+                        disabled={quantity===1 || loading}
                         className="btn btn-sm btn-outline"
                     >
                         <FaMinus />
@@ -88,6 +100,7 @@ const CartItemCard = ({ item, updateQuantity, removeItem }) => {
 
                     <button
                         onClick={onIncrease}
+                        disabled={quantity===10 || loading}
                         className="btn btn-sm btn-outline"
                     >
                         <FaPlus />

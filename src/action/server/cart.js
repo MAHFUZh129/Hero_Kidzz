@@ -101,3 +101,26 @@ export const increaseItemDb = async (id, quantity) => {
 
   return { success: Boolean(result.modifiedCount) };
 };
+
+
+// decrease Item in Db
+export const decreaseItemDb = async (id, quantity) => {
+  const { user } = (await getServerSession(authOptions)) || {};
+  if (!user) return { success: false };
+
+  if (quantity <=1) {
+    return { success: false, message: "add at least one products " };
+  }
+
+  const query = { _id: new ObjectId(id), email: user?.email };
+
+  const updatedData = {
+    $inc: {
+      quantity: -1,
+    },
+  };
+
+  const result = await cartCollection.updateOne(query, updatedData);
+
+  return { success: Boolean(result.modifiedCount) };
+};
