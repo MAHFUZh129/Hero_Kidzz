@@ -14,6 +14,13 @@ const Cart = ({ cartItem = [] }) => {
     setItems((prevItems) => prevItems.filter((item) => item._id != id));
   };
 
+  const updateQuantity = (id, q) => {
+    setItems((prevItems) =>
+      prevItems.map((item) =>
+        item._id == id ? { ...item, quantity: q } : item
+      )
+    );
+  };
 
     return (
 
@@ -25,7 +32,7 @@ const Cart = ({ cartItem = [] }) => {
                         key={item._id.toString()}
                         item={{ ...item, _id: item._id.toString() }}
                         removeItem={removeItem}
-                        // updateQuantity={updateQuantity}
+                        updateQuantity={updateQuantity}
                     />
                 ))}
             </div>

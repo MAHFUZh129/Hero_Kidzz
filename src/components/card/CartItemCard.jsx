@@ -1,11 +1,11 @@
 "use client"
-import { deleteItemsFromCart } from "@/action/server/cart";
+import { deleteItemsFromCart, increaseItemDb } from "@/action/server/cart";
 import Image from "next/image";
 import { useState } from "react";
 import { FaPlus, FaMinus, FaTrash } from "react-icons/fa";
 import Swal from "sweetalert2";
 
-const CartItemCard = ({ item, onIncrease, onDecrease, removeItem }) => {
+const CartItemCard = ({ item, updateQuantity, removeItem }) => {
     //   const { title, image, price, quantity } = item;
     const { title, image, quantity, price, _id } = item;
     const [loading, setLoading] = useState(false);
@@ -45,16 +45,16 @@ const CartItemCard = ({ item, onIncrease, onDecrease, removeItem }) => {
         });
     };
 
-    //   const onIncrease = async () => {
-    //     setLoading(true);
-    //     const result = await increaseItemDb(_id, quantity);
+      const onIncrease = async () => {
+        setLoading(true);
+        const result = await increaseItemDb(_id, quantity);
 
-    //     if (result.success) {
-    //       Swal.fire("success", "এই প্রোডাক্ট টি আরেকবার  যুক্ত করা হলো", "success");
-    //       updateQuantity(_id, quantity + 1);
-    //     }
-    //     setLoading(false);
-    //   };
+        if (result.success) {
+          Swal.fire("success", "Added this product to cart", "success");
+          updateQuantity(_id, quantity + 1);
+        }
+        setLoading(false);
+      };
 
 
     return (

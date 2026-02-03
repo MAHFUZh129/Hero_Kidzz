@@ -79,3 +79,25 @@ export const deleteItemsFromCart = async (id) => {
 
   return { success: Boolean(result.deletedCount) };
 };
+
+// increase Item in Db
+export const increaseItemDb = async (id, quantity) => {
+  const { user } = (await getServerSession(authOptions)) || {};
+  if (!user) return { success: false };
+
+  if (quantity > 10) {
+    return { success: false, message: "You cant buy 10 products at a time" };
+  }
+
+  const query = { _id: new ObjectId(id), email: user?.email };
+
+  const updatedData = {
+    $inc: {
+      quantity: 1,
+    },
+  };
+
+  const result = await cartCollection.updateOne(query, updatedData);
+
+  return { success: Boolean(result.modifiedCount) };
+};
