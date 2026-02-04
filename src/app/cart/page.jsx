@@ -3,6 +3,7 @@ import CartItemCard from '@/components/card/CartItemCard';
 import Cart from '@/components/home/Cart';
 import Link from 'next/link';
 import React from 'react';
+import { FaBoxOpen, FaShoppingCart } from 'react-icons/fa';
 
 const CartItems = async() => {
     const cartItems = await getCart()
