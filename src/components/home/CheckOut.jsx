@@ -2,14 +2,25 @@
 import { createOrder } from '@/action/server/order';
 import { useSession } from 'next-auth/react';
 import { useRouter } from 'next/navigation';
-import React, { useState } from 'react';
+import React, { useMemo, useState } from 'react';
 import { AiOutlineLoading } from "react-icons/ai";
+import Swal from 'sweetalert2';
 
 const CheckOut = ({ cartItems = [] }) => {
 
     const session = useSession();
     const router = useRouter();
     const [loading, setLoading] = useState(false);
+
+    const totalItems = useMemo(
+        () => cartItems.reduce((sum, item) => sum + item.quantity, 0),
+        [cartItems]
+    );
+
+    const totalPrice = useMemo(
+        () => cartItems.reduce((sum, item) => sum + item.quantity * item.price, 0),
+        [cartItems]
+    );
 
     const handleSubmit = async (e) => {
         setLoading(true);
@@ -24,11 +35,13 @@ const CheckOut = ({ cartItems = [] }) => {
             address: form.deliveryInfo.value,
             instruction: form.specialInstruction.value,
         };
-        console.log(payload);
+        // console.log(payload);
         const result = await createOrder(payload);
+        console.log('cehekout' ,result)
         if (result.success) {
             Swal.fire(
                 "Done!!",
+                "oreder added",
                 "success"
             );
 
@@ -155,8 +168,8 @@ const CheckOut = ({ cartItems = [] }) => {
                     <div className="divider"></div>
 
                     <div className="flex justify-between font-bold text-lg">
-                        {/* <span>Total ({totalItems} items)</span> */}
-                        {/* <span>৳{totalPrice}</span> */}
+                        <span>Total ({totalItems} items)</span>
+                        <span>৳{totalPrice}</span>
                     </div>
                 </div>
             </div>
