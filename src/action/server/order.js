@@ -3,6 +3,8 @@
 import { authOptions } from "@/lib/authOptions"
 import { clearCart, getCart } from "./cart"
 import { getServerSession } from "next-auth"
+import { sendEmail } from "@/lib/sendEmail"
+import { orderInvoiceTemplate } from "@/lib/invoiceTemplate"
 
 const { dbConnect, collectionName } = require("@/lib/dbConnect")
 
@@ -33,10 +35,20 @@ export const createOrder = async (payload) => {
 
     const result = await orderCollection.insertOne(newOrder);
     if (Boolean(result.insertedId)) {
-        const result = await clearCart();
+        await clearCart();
     }
-
+        await sendEmail({
+      to: user.email,
+      subject: "Your Order Invoice - Hero Kidz",
+      html: orderInvoiceTemplate({
+        orderId: result.insertedId.toString(),
+        items: cart,
+        totalPrice,
+      }),
+    });
     return {
         success: result.insertedId,
     };
+ 
 }
+
