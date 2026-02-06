@@ -10,7 +10,7 @@ const { dbConnect,  collectionName } = require("@/lib/dbConnect");
 
 const cartCollection = dbConnect(collectionName.CART);
 
-export const handleCart = async ({ product, inc = true }) => {
+export const handleCart = async (productId) => {
   const { user } = (await getServerSession(authOptions)) || {};
   if (!user) return { success: false };
 
@@ -23,7 +23,7 @@ export const handleCart = async ({ product, inc = true }) => {
     //if Exist:Update Cart
     const updatedData = {
       $inc: {
-        quantity: inc ? 1 : -1,
+        quantity:1,
       },
     };
     const result = await cartCollection.updateOne(query, updatedData);
@@ -31,6 +31,9 @@ export const handleCart = async ({ product, inc = true }) => {
 
   } 
   else {
+    const product = await dbConnect(collections.PRODUCTS).findOne({
+      _id: new ObjectId(productId),
+    });
     //Not Exist:insert Cart
     const newData = {
       productId: product?._id,
